@@ -24,3 +24,9 @@ By the end of this application, you’ll have a comprehensive understanding of u
 
 
 
+### Future Features
+
+https://github.com/tspannhw/AIM-AirQuality/tree/main
+
+
+
