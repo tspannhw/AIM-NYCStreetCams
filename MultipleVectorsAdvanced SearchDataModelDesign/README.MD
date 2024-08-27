@@ -23,6 +23,8 @@ Build a simple Python [RAG](https://milvus.io/docs/integrate_with_langchain.md) 
 By the end of this application, you’ll have a comprehensive understanding of using Milvus, data ingest object semi-structured and unstructured data, and using Open Source models to build a robust and efficient data retrieval system.   For future enhancements, we can use these results to build prompts for LLM, slack bots, streaming data to Kafka and as a Street Camera search engine.
 
 
+![diagram](https://github.com/tspannhw/AIM-NYCStreetCams/blob/main/MultipleVectorsAdvanced%20SearchDataModelDesign/Untitled-2024-06-10-1526.png?raw=true)
+
 
 ### Future Features
 
