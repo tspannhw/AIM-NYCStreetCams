@@ -39,4 +39,6 @@ By the end of this application, you’ll have a comprehensive understanding of u
 
 
 
+![logo](https://511ny.org/Content/NY/Images/developers/officiallogo.jpg)
+
 
