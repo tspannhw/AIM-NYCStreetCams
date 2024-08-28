@@ -28,7 +28,15 @@ By the end of this application, you’ll have a comprehensive understanding of u
 
 ### Future Features
 
-https://github.com/tspannhw/AIM-AirQuality/tree/main
+* https://github.com/tspannhw/AIM-AirQuality/tree/main
+
+
+### Resources
+
+* https://511ny.org/developers/help/api/get-api-getcameras_key_format
+
+
+
 
 
 
