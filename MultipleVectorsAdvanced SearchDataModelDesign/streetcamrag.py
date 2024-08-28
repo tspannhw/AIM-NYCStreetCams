@@ -59,7 +59,13 @@ from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 from dotenv import load_dotenv
 load_dotenv(verbose=True)
+from langchain_core.globals import set_verbose, set_debug
 
+# Disable verbose logging
+set_verbose(False)
+
+# Disable debug logging
+set_debug(False)
 
 ### Setup environment and constants
 
@@ -76,10 +82,13 @@ YESTERDAYS_DATE = (datetime.now() - timedelta(1)).strftime('%Y-%m-%d')
 
 ### Environment Variables needed
 os.environ["LANGCHAIN_HUB_API_URL"] = "https://api.hub.langchain.com"
-os.environ["LANGCHAIN_HUB_API_KEY"] = "X"
-os.environ["LANGCHAIN_API_KEY"] = "X"
+os.environ["LANGCHAIN_HUB_API_KEY"] = os.environ.get("LANGCHAIN_HUB_API_KEY")
+os.environ["LANGCHAIN_API_KEY"] = os.environ.get("LANGCHAIN_HUB_API_KEY")
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
 os.environ["LANGCHAIN_ENDPOINT"] = "https://api.hub.langchain.com"
+
+### Turn off slack warnings
+os.environ["SKIP_SLACK_SDK_WARNING"] = "false"
 
 # https://api.python.langchain.com/en/latest/vectorstores/langchain_community.vectorstores.milvus.Milvus.html 
 
@@ -102,8 +111,6 @@ def run_query() -> None:
     )
 
     query = input("\nQuery: ")
-    prompt = hub.pull("rlm/rag-prompt", api_url="https://api.hub.langchain.com")
-
     qa_chain = RetrievalQA.from_chain_type(
         llm, retriever=vector_store.as_retriever(collection =  SC_COLLECTION_NAME))
 
@@ -118,9 +125,7 @@ def run_query() -> None:
                                            
     except SlackApiError as e:
         # You will get a SlackApiError if "ok" is False
-        assert e.response["error"]
-
-
+        print("Slack failed")
 
 if __name__ == "__main__":
     while True:
