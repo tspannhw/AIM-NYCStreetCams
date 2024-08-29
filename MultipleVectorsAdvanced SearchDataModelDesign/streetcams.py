@@ -244,7 +244,7 @@ schema = CollectionSchema(fields=fields)
 
 # If we haven't done so yet, create out collection and add the schema and indexes.
 if milvus_client.has_collection(collection_name=COLLECTION_NAME):
-    print("Exists.")
+    print("Collection Exists.")
 else:
     milvus_client.create_collection(COLLECTION_NAME, schema=schema, metric_type="COSINE", auto_id=True)
 
