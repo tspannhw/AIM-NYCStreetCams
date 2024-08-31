@@ -2,7 +2,7 @@
 
 # Goal of this Application
 
-In this application, we will build an advanced data model and use it for ingest and various search options.   For this notebook portion, we will
+In this application, we will build an advanced data model and use it for ingest and various search options.   
 
 ### 1️⃣ Ingest Data Fields, Enrich Data With Lookups, and Format :
 Learn to ingest data from including JSON and Images, format and transform to optimize hybrid searches.   This is done inside the streetcams.py application.
@@ -34,7 +34,10 @@ By the end of this application, you’ll have a comprehensive understanding of u
 ### Resources
 
 * https://511ny.org/developers/help/api/get-api-getcameras_key_format
-
+* https://zilliz.com/blog/building-multilingual-rag-milvus-langchain-openai
+* https://medium.com/@tspann/utilizing-multiple-vectors-and-advanced-search-data-model-design-for-city-data-705d68d8daf2
+* https://www.youtube.com/watch?v=HaRc0rsaMo0
+* https://dzone.com/articles/multiple-vectors-and-advanced-search-data-model-design
 
 
 
