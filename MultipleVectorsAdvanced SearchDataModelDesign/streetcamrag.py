@@ -119,10 +119,10 @@ def run_query() -> None:
     print(resultforslack)
 
     try:
-        response = client.chat_postMessage(channel="C06NE1FU6SE", text="", 
-                                            blocks=[{"type": "section","text": {"type": "mrkdwn","text": str(query) + "  \n\n" }}, 
-                                                    {"type": "divider"},{"type": "section","text": {"type": "mrkdwn","text": str(resultforslack) +"\n" }}])
-                                           
+        response = client.chat_postMessage(mrkdwn=True, channel="C06NE1FU6SE", text="", 
+                                            blocks=[{"type": "section","text": {"type": "mrkdwn","text": "*" + str(query) + "*  \n\n" + str(resultforslack) +"\n" }}])
+
+    
     except SlackApiError as e:
         # You will get a SlackApiError if "ok" is False
         print("Slack failed")

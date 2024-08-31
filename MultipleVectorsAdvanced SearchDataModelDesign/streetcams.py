@@ -99,7 +99,7 @@ extractor = FeatureExtractor("resnet34")
 
 #----- format weather details string
 def formatweather(latitude, longitude, weatherfields):
-    weathertext = "The current weather observation for {0}[{1}] in {2} @ {3},{4} for {5} is {6} with a temperature of {7}F, a dew point of {8} and relative humidity of {9}% with a wind speed of {10}{11} with a visibility of {12} at an elevation of {13} and an altimeter reading of {14} for the {15} area."
+    weathertext = "The current weather observation for {0} [{1}] in {2} @ {3},{4} for {5} is {6} with a temperature of {7}F, a dew point of {8} and relative humidity of {9}% with a wind speed of {10} in a wind direction of {11} with a visibility of {12} at an elevation of {13} and an altimeter reading of {14} for the {15} area."
 
     try:
         weatherdetails = weathertext.format( weatherfields.setdefault("weathername", "NA"), 
@@ -168,8 +168,8 @@ def weatherparse(url):
         weatherfields['timezone'] = str(currentobservation['timezone'])
         weatherfields['state'] = str(currentobservation['state'])
         weatherfields['windchill'] = str(currentobservation['WindChill'])
-    except Exception:
-        print("Error")
+    except Exception as ex:
+        print("Error building the weather", ex)
     
     return weatherfields
     
@@ -180,7 +180,6 @@ def weatherparse(url):
 # the items we wish to find are cars.
 
 yolomodel = YOLO('yolov8n.pt')  # pretrained YOLOv8n model
-
 
 # -----------------------------------------------------------------------------
 # Connect to Milvus
@@ -320,8 +319,15 @@ for jsonitems in json_object:
             with open(filepath, 'wb') as f:
                 f.write(img.content)
 
-        results = yolomodel.predict(filepath, stream=False, save=True, imgsz=640, conf=0.5, verbose=False)
+        results = None
+        try:
+            results = yolomodel.predict(filepath, stream=False, save=True, imgsz=640, conf=0.5, verbose=False)
+        except Exception as e:
+            print("An error in yolo predict " + filepath + ":", e)
 
+        if ( results is None):
+            continue
+            
 # -----------------------------------------------------------------------------
 # Iterate results
         for result in results:
@@ -337,7 +343,7 @@ for jsonitems in json_object:
             resultfilename = "camimages/yolo{0}.png".format(uuid.uuid4())
             result.save(filename=resultfilename)  # save to disk
             detectiondetails = str(result.verbose())
-            strText = ":tada:" + str(strname) + ":" + str(roadwayname)
+            strText = ":tada:" + str(strname) + ":" + str(roadwayname) + ":" + str(detectiondetails)
 
 # -----------------------------------------------------------------------------
 # Milvus insert
@@ -382,9 +388,7 @@ for jsonitems in json_object:
                 "state": weatherfields.setdefault("state","NA"),
                 "windchill": weatherfields.setdefault("windchill","NA"),
                 "weatherdetails": str(weatherdetails) })
-
-            # future:   detectiondetails
             except Exception as e:
-                print("An error:", e)
+                print("An error in insert " + areadescription + " :", e)
 
 # -----------------------------------------------------------------------------
